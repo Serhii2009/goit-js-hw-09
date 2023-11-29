@@ -24,6 +24,13 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     selectedDate = selectedDates[0];
+
+    if (selectedDate <= new Date()) {
+      Report.failure('Please choose a date in the future', '');
+      btnStart.disabled = true;
+    } else {
+      btnStart.disabled = false;
+    }
   },
 };
 const datePicker = document.querySelector('#datetime-picker');
@@ -52,6 +59,8 @@ const btnStart = document.querySelector('button[data-start]');
 
 btnStart.addEventListener('click', handleTimer);
 
+btnStart.disabled = true;
+
 function handleTimer() {
   if (selectedDate <= new Date()) {
     Report.failure('Please choose a date in the future', '');
@@ -68,6 +77,7 @@ function handleTimer() {
       }
     }, 1000);
   }
+  btnStart.disabled = true;
 }
 
 function addLeadingZero(value) {
